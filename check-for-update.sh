@@ -1,5 +1,5 @@
 #!/bin/bash
-#example command: ./applyupdates.sh <tag> <environment>
+#example command: ./check-for-update.sh <tag> <environment>
 
 # Exit on error
 set -e
@@ -10,7 +10,7 @@ terminus auth:login --machine-token=UuXuPBy6NlMovqCIXsvLEbnyYM3Sqp9nIpETZlX9BuXS
 # Stash org UUID
 ORG_UUID="1b50534e-d6d6-458a-9095-878e32b52a33"
 
-# Environment - argument 2
+# Environment
 ENV='dev'
 
 # Stash list of all Pantheon sites in the org
@@ -51,7 +51,7 @@ while read -r PANTHEON_SITE_NAME; do
 	#Check Update Status for Upstream updates - is there an update available?
 	STATUS=$(terminus upstream:updates:status ${PANTHEON_SITE_NAME}.${ENV})
 
-	#If there are updates available, apply them
+	#If there are updates available, apply tag "Updates Available". If not, apply tag "No Updates".
 	if [[ ${STATUS} = "outdated" ]]
 	then
 		terminus tag:add ${PANTHEON_SITE_NAME} ${ORG_UUID} 'Updates Available'
