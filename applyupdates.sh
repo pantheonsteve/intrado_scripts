@@ -10,14 +10,17 @@ terminus auth:login --machine-token=UuXuPBy6NlMovqCIXsvLEbnyYM3Sqp9nIpETZlX9BuXS
 # Stash org UUID
 ORG_UUID="1b50534e-d6d6-458a-9095-878e32b52a33"
 
-# TAG - argument 1
-TAG="Updates Available"
+#TAG
+UPDATES_TAG="Updates Available"
+
+#TAG
+CURRENT_TAG="No Updates"
 
 # Environment - argument 2
 ENV='dev'
 
 # Stash list of all Pantheon sites in the org with the tag "Updates Available"
-PANTHEON_SITES="$(terminus org:site:list -n ${ORG_UUID} --tag="${TAG}" --field=Name)"
+PANTHEON_SITES="$(terminus org:site:list -n ${ORG_UUID} --tag="${UPDATES_TAG}" --field=Name)"
 
 #Loop over the site names
 while read -r PANTHEON_SITE_NAME; do
@@ -38,8 +41,8 @@ while read -r PANTHEON_SITE_NAME; do
 	then
 		terminus connection:set ${PANTHEON_SITE_NAME}.${ENV} git
 		terminus upstream:updates:apply ${PANTHEON_SITE_NAME}.${ENV}
-		terminus tag:remove ${PANTHEON_SITE_NAME} ${ORG_UUID} "${TAG}"
-		terminus tag:add ${PANTHEON_SITE_NAME} ${ORG_UUID} "No Updates"
+		terminus tag:remove ${PANTHEON_SITE_NAME} ${ORG_UUID} "${UPDATES_TAG}"
+		terminus tag:add ${PANTHEON_SITE_NAME} ${ORG_UUID} "${CURRENT_TAG}"
 		echo 'Updates applied to '${PANTHEON_SITE_NAME}
 	else
 		echo 'no updates available for '${PANTHEON_SITE_NAME}
