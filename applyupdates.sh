@@ -36,8 +36,9 @@ while read -r PANTHEON_SITE_NAME; do
 	#If there are updates available, apply them
 	if [[ ${STATUS} = "outdated" ]]
 	then
+		terminus connection:set ${PANTHEON_SITE_NAME}.${ENV} git
 		terminus upstream:updates:apply ${PANTHEON_SITE_NAME}.${ENV}
-		terminus tag:remove ${PANTHEON_SITE_NAME} ${ORG_UUID} ${TAG}
+		terminus tag:remove ${PANTHEON_SITE_NAME} ${ORG_UUID} "${TAG}"
 		terminus tag:add ${PANTHEON_SITE_NAME} ${ORG_UUID} "No Updates"
 		echo 'Updates applied to '${PANTHEON_SITE_NAME}
 	else
