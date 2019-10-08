@@ -1,5 +1,5 @@
 #!/bin/bash
-#example command: ./check-for-update.sh <tag> <environment>
+#example command: ./check-for-updates.sh <tag> <environment>
 
 # Exit on error
 set -e
