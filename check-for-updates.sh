@@ -33,6 +33,7 @@ while read -r PANTHEON_SITE_NAME; do
 	#If there are updates available, apply them
 	if [[ ${STATUS} = "outdated" ]]
 	then
+		terminus tag:remove ${PANTHEON_SITE_NAME} ${ORG_UUID} "No Updates"
 		terminus tag:add ${PANTHEON_SITE_NAME} ${ORG_UUID} 'Updates Available'
 	else
 		terminus tag:add ${PANTHEON_SITE_NAME} ${ORG_UUID} 'No Updates'
